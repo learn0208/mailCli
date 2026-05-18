@@ -1,0 +1,21 @@
+# Example mailCli config — copy to ~/.mailcli.yaml and edit.
+# Do not commit real passwords to version control.
+
+user_agent: "MyAutomation/1.0"
+
+profiles:
+  default:
+    protocol: ews
+    endpoint: https://mail.example.com/EWS/Exchange.asmx
+    user: zhang.san
+    auth_type: ntlm
+    domain: corp.example.com
+    smtp_address: zhang.san@mail.example.com
+    display_name: "Zhang San"
+
+  # oauth_example:
+  #   protocol: ews
+  #   endpoint: https://outlook.office365.com/EWS/Exchange.asmx
+  #   user: user@contoso.onmicrosoft.com
+  #   auth_type: oauth
+  #   # Prefer MAILCLI_TOKEN env over storing tokens here.

@@ -1,0 +1,19 @@
+# Binaries (repository root only — do not use bare "mailcli" or cmd/mailcli is ignored)
+/mailcli
+/mailcli.exe
+/ews-cli
+/ews-cli.exe
+/dist/
+/mailcli-*
+
+# Local config (never commit secrets)
+.mailcli.yaml
+.mailcli.yml
+.ews-cli.yaml
+.ews-cli.yml
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+Thumbs.db

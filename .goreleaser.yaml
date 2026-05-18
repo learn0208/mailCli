@@ -1,0 +1,51 @@
+version: 2
+
+project_name: mailcli
+
+before:
+  hooks:
+    - go test ./...
+
+builds:
+  - id: mailcli
+    main: ./cmd/mailcli
+    binary: mailcli
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/learn0208/mailcli/internal/app.Version={{.Version}}
+
+archives:
+  - id: default
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  disable: true
+
+release:
+  footer: |
+    ## 快速开始
+    1. 下载对应平台的压缩包并解压
+    2. 将 `mailcli` / `mailcli.exe` 放入 PATH
+    3. 复制 [mailcli.example.yaml](https://github.com/learn0208/mailCli/blob/main/docs/examples/mailcli.example.yaml) 为 `~/.mailcli.yaml`
+    4. 运行 `mailcli --version`
