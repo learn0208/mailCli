@@ -1,0 +1,7 @@
+# Outlook / Hotmail — 文档：docs/providers/outlook.md
+
+profiles:
+  outlook:
+    protocol: imap
+    provider: outlook
+    user: you@outlook.com

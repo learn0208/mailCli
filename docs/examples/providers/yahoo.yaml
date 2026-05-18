@@ -1,0 +1,8 @@
+# Yahoo — 应用密码 → MAILCLI_PASSWORD
+# 文档：docs/providers/yahoo.md
+
+profiles:
+  yahoo:
+    protocol: imap
+    provider: yahoo
+    user: you@yahoo.com

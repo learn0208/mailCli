@@ -1,0 +1,8 @@
+# iCloud — App 专用密码 → MAILCLI_PASSWORD
+# 文档：docs/providers/icloud.md
+
+profiles:
+  icloud:
+    protocol: imap
+    provider: icloud
+    user: you@icloud.com

@@ -1,0 +1,7 @@
+# 阿里邮箱 — 文档：docs/providers/aliyun.md
+
+profiles:
+  aliyun:
+    protocol: imap
+    provider: aliyun
+    user: you@aliyun.com

@@ -7,7 +7,7 @@ type Protocol string
 
 const (
 	ProtocolEWS  Protocol = "ews"
-	ProtocolIMAP Protocol = "imap" // planned
+	ProtocolIMAP Protocol = "imap"
 )
 
 // NormalizeProtocol returns a known protocol or EWS when empty.
@@ -25,7 +25,7 @@ func NormalizeProtocol(s string) Protocol {
 // Supported reports whether the protocol is implemented.
 func (p Protocol) Supported() bool {
 	switch p {
-	case ProtocolEWS, "":
+	case ProtocolEWS, "", ProtocolIMAP:
 		return true
 	default:
 		return false

@@ -1,0 +1,7 @@
+# 新浪邮箱 — 文档：docs/providers/sina.md
+
+profiles:
+  sina:
+    protocol: imap
+    provider: sina
+    user: you@sina.com

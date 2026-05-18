@@ -18,8 +18,8 @@ internal/app          ← Cobra, flag parsing, profile merge
         ├── internal/domain     ← protocol id, future shared models
         └── internal/protocol/
                 └── ews/        ← today: search, send, show, ewshttp, message
-                └── imap/       ← planned
-                └── smtp/       ← planned (send path)
+                └── imap/       ← search, show
+                └── smtp/       ← send path (paired with imap profile)
 ```
 
 ## EWS (current)
@@ -35,9 +35,21 @@ internal/app          ← Cobra, flag parsing, profile merge
 
 Commands in `internal/app` select the backend using `profile.protocol` (default `ews`). Unsupported protocols fail fast with a clear error.
 
-## Configuration evolution
+## IMAP / SMTP (current)
 
-Today, EWS fields live at the profile top level (`endpoint`, `user`, `auth_type`, …). For IMAP/SMTP, nested blocks are likely:
+| Package | Role |
+|---------|------|
+| `protocol/imap` | Dial, login, folder name mapping |
+| `protocol/imap/search` | IMAP SEARCH + FETCH, client-side filters |
+| `protocol/imap/show` | FETCH one message by UID |
+| `protocol/smtp` | Host/TLS settings |
+| `protocol/smtp/send` | MIME build + SMTP delivery, optional Sent-folder verify via IMAP |
+
+`protocol: imap` profiles use **IMAP** for `search`/`show` and **SMTP** for `send`. `item_id` in JSON output is the **UID** within the selected folder. Search uses **UidSearch** + client-side filters (`--query`, Chinese keywords); keyword scans default to the newest ~800 messages in the folder.
+
+## Configuration
+
+EWS fields live at the profile top level (`endpoint`, `user`, `auth_type`, …). IMAP/SMTP can use **`provider`** presets (`internal/config/provider.go`) so `imap.host` / `smtp.host` are filled from `qq`, `163`, `gmail`, etc. Nested blocks override presets:
 
 ```yaml
 profiles:

@@ -1,0 +1,7 @@
+# 网易 126 — 文档：docs/providers/126.md
+
+profiles:
+  netease126:
+    protocol: imap
+    provider: 126
+    user: yourname@126.com

@@ -10,7 +10,6 @@ import (
 	"golang.org/x/term"
 
 	"github.com/learn0208/mailcli/internal/config"
-	"github.com/learn0208/mailcli/internal/domain"
 )
 
 // Version is the CLI release version (override at link time: -ldflags "-X .../internal/app.Version=v1.2.3").
@@ -29,20 +28,28 @@ var (
 )
 
 func defaultConfigPath() string {
-	h, err := os.UserHomeDir()
-	if err != nil {
-		return filepath.Join(".", ".mailcli.yaml")
+	var candidates []string
+	if wd, err := os.Getwd(); err == nil {
+		candidates = append(candidates,
+			filepath.Join(wd, ".mailcli.yaml"),
+			filepath.Join(wd, ".mailcli.yml"),
+		)
 	}
-	candidates := []string{
-		filepath.Join(h, ".mailcli.yaml"),
-		filepath.Join(h, ".ews-cli.yaml"),
+	if h, err := os.UserHomeDir(); err == nil {
+		candidates = append(candidates,
+			filepath.Join(h, ".mailcli.yaml"),
+			filepath.Join(h, ".ews-cli.yaml"),
+		)
 	}
 	for _, p := range candidates {
 		if _, err := os.Stat(p); err == nil {
 			return p
 		}
 	}
-	return candidates[0]
+	if h, err := os.UserHomeDir(); err == nil {
+		return filepath.Join(h, ".mailcli.yaml")
+	}
+	return ".mailcli.yaml"
 }
 
 func expandUserPath(p string) (string, error) {
@@ -76,6 +83,7 @@ func loadMergedProfile() (config.Profile, config.AppSettings, error) {
 		p.AuthType = authType
 	}
 	config.ApplyEnv(&p)
+	p.ApplyProviderPreset()
 	config.ApplyEnvAppSettings(&app)
 	return p, app, nil
 }
@@ -115,17 +123,9 @@ func resolvePassword(p config.Profile) (string, error) {
 	return string(b), nil
 }
 
-func requireSupportedProtocol(p config.Profile) error {
-	proto := domain.NormalizeProtocol(p.Protocol)
-	if !proto.Supported() {
-		return fmt.Errorf("protocol %q is not supported yet (available: ews)", p.Protocol)
-	}
-	return nil
-}
-
 var rootCmd = &cobra.Command{
 	Use:           "mailcli",
-	Short:         "mailCli — cross-protocol mail CLI (EWS today; IMAP/SMTP planned)",
+	Short:         "mailCli — cross-protocol mail CLI (EWS, IMAP/SMTP)",
 	SilenceErrors: true,
 	SilenceUsage:  true,
 }
@@ -143,7 +143,7 @@ func init() {
 	rootCmd.Version = Version
 	rootCmd.SetVersionTemplate("{{.Version}}\n")
 
-	rootCmd.AddCommand(searchCmd(), sendCmd(), discoverCmd(), showCmd())
+	rootCmd.AddCommand(searchCmd(), sendCmd(), discoverCmd(), showCmd(), providersCmd(), profileCmd())
 }
 
 func Execute() error {

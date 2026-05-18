@@ -13,6 +13,9 @@ profiles:
     smtp_address: zhang.san@mail.example.com
     display_name: "Zhang San"
 
+  # IMAP examples: see docs/examples/providers/ (qq.yaml, 163.yaml, gmail.yaml, …)
+  # Guides: docs/providers/README.md  |  CLI: mailcli providers doc qq
+
   # oauth_example:
   #   protocol: ews
   #   endpoint: https://outlook.office365.com/EWS/Exchange.asmx

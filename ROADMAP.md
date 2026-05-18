@@ -36,28 +36,33 @@
 
 ---
 
+## 已完成（v0.2.x · IMAP / SMTP）
+
+| 能力 | 说明 |
+|------|------|
+| IMAP `search` | UidSearch + 客户端过滤；`--query` / 位置参数；中文关键词本地匹配 |
+| IMAP `show` | 按 UID 读信（text / html / json），`--folder` 与 search 一致 |
+| SMTP `send` | TLS / STARTTLS，附件，可选已发送文件夹复核 |
+| 配置 | `provider` 预设（QQ/163/Gmail…）、最简 `user` + `provider: qq` |
+| 文档 | [docs/providers/](docs/providers/)、`mailcli providers doc` |
+| 验证 | QQ 邮箱 search / show / send 端到端可用 |
+
+---
+
 ## 进行中 / 下一版
 
 | 项 | 说明 | 状态 |
 |----|------|------|
 | GitHub Release 自动构建 | 打 tag `v*` 后 CI 发布多平台包 | 已配置 workflow，待首次 tag |
 | 网络 Autodiscover | 根据邮箱自动解析 EWS URL | 未开始 |
+| IMAP OAuth (XOAUTH2) | Gmail / Outlook 等 | 未开始 |
+| QQ/163 扫码登录 | IMAP/SMTP 标准协议不支持；请用授权码 | 不计划 |
 
 ---
 
-## 计划中（多协议）
+## 计划中
 
 优先级为建议顺序，欢迎 Issue/PR 讨论。
-
-### P1 — IMAP / SMTP（通用邮箱）
-
-| 能力 | 说明 |
-|------|------|
-| IMAP `search` | 文件夹内检索、拉取列表 |
-| IMAP `show` | 按 UID/消息 ID 读信 |
-| SMTP `send` | 标准 SMTP 发信（TLS/STARTTLS） |
-| 配置 | `protocol: imap` + `imap` / `smtp` 嵌套配置块 |
-| 统一 CLI | 与 EWS 尽量相同的子命令与 JSON 字段（能对齐的对齐） |
 
 ### P2 — 体验与运维
 

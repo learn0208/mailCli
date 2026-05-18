@@ -24,7 +24,7 @@ func TestProtocolSupported(t *testing.T) {
 	if !ProtocolEWS.Supported() {
 		t.Fatal("ews should be supported")
 	}
-	if ProtocolIMAP.Supported() {
-		t.Fatal("imap not implemented yet")
+	if !ProtocolIMAP.Supported() {
+		t.Fatal("imap should be supported")
 	}
 }

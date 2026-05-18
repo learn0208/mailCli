@@ -12,8 +12,12 @@ import (
 
 // Profile holds merged connection settings for one account.
 type Profile struct {
-	// Protocol is the mail backend: ews (default), imap (planned).
-	Protocol    string `mapstructure:"protocol"`
+	// Protocol is the mail backend: ews (default), imap.
+	Protocol string `mapstructure:"protocol"`
+	// Provider selects a built-in preset (gmail, qq, 163, yahoo, …) or is inferred from user@domain.
+	Provider string `mapstructure:"provider"`
+	IMAP     IMAPSettings `mapstructure:"imap"`
+	SMTP        SMTPSettings `mapstructure:"smtp"`
 	Endpoint    string `mapstructure:"endpoint"`
 	User        string `mapstructure:"user"`
 	AuthType    string `mapstructure:"auth_type"`
@@ -126,6 +130,15 @@ func ApplyEnv(p *Profile) {
 	}
 	if v := envFirst("MAILCLI_SMTP_ADDRESS", "EWS_SMTP_ADDRESS"); v != "" {
 		p.SMTPAddress = v
+	}
+	if v := envFirst("MAILCLI_IMAP_HOST"); v != "" {
+		p.IMAP.Host = v
+	}
+	if v := envFirst("MAILCLI_SMTP_HOST"); v != "" {
+		p.SMTP.Host = v
+	}
+	if v := envFirst("MAILCLI_PROVIDER"); v != "" {
+		p.Provider = v
 	}
 }
 

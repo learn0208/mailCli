@@ -1,0 +1,14 @@
+# 网易 163 — 客户端授权密码 → MAILCLI_PASSWORD
+# 文档：docs/providers/163.md
+
+profiles:
+  netease163:
+    protocol: imap
+    provider: 163
+    user: yourname@163.com
+    imap:
+      host: imap.163.com:993
+      tls: true
+    smtp:
+      host: smtp.163.com:465
+      tls: true

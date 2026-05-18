@@ -1,0 +1,16 @@
+# QQ 邮箱 — 最简配置（推荐）
+# 授权码: export MAILCLI_PASSWORD='...'
+# 文档: docs/providers/qq.md
+
+profiles:
+  qq:
+    protocol: imap
+    provider: qq
+    user: 123456789@qq.com
+
+# 也可省略 provider，仅写 user: xxx@qq.com 会按域名自动识别
+# 完整手写 imap/smtp 仅在你需要覆盖默认值时才必要，例如:
+#   imap:
+#     host: imap.qq.com:993
+#   smtp:
+#     host: smtp.qq.com:465

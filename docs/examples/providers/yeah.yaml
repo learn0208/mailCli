@@ -1,0 +1,7 @@
+# 网易 yeah.net — 文档：docs/providers/yeah.md
+
+profiles:
+  yeah:
+    protocol: imap
+    provider: yeah
+    user: yourname@yeah.net
